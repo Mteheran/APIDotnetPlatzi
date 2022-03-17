@@ -7,15 +7,17 @@ namespace APIDotnetPlatzi.Controllers;
 public class HelloWorldController : ControllerBase
 {
     IHelloWorldService helloService;
-
-    public HelloWorldController(IHelloWorldService helloworldService)
+    ILogger<HelloWorldController> logger;
+    public HelloWorldController(IHelloWorldService helloworldService, ILogger<HelloWorldController> loggerhello)
     {
+        logger = loggerhello;
         helloService = helloworldService;
     }
 
     [HttpGet]
     public IActionResult HelloWorld()
     {
+        logger.LogInformation("Retornando mensaje 'Hello World'");
         return Ok(helloService.GetHelloWorld());
 
     }
