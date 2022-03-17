@@ -1,8 +1,8 @@
-public class HourMiddleware
+public class TimeMiddleware
 {
         readonly RequestDelegate next;
 
-        public HourMiddleware(RequestDelegate nextRequest)
+        public TimeMiddleware(RequestDelegate nextRequest)
         {
             next = nextRequest;
         }
@@ -11,7 +11,7 @@ public class HourMiddleware
         {
             await next(context);
 
-            if(context.Request.Query.Any(p=> p.Key== "hour"))
+            if(context.Request.Query.Any(p=> p.Key== "time"))
             {
                 await context.Response.WriteAsync(DateTime.Now.ToShortTimeString());
             }
@@ -23,6 +23,6 @@ public class HourMiddleware
     {
         public static IApplicationBuilder UseHourMiddleware(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<HourMiddleware>();
+            return builder.UseMiddleware<TimeMiddleware>();
         }
     }
